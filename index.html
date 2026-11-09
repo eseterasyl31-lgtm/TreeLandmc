@@ -1,161 +1,788 @@
-```yaml
-menu_title: '&6&l✦ &e&lTREELANDMC &6&l✦'
-open_command:
-  - menu
-  - main
-  - men
-  - басты
-size: 54
+```html
+<!DOCTYPE html>
+<html lang="kk" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TreeLand — Winter Anarchy Server (1.21.x)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'mc-bg': '#060d16',
+                        'mc-card': 'rgba(12, 26, 36, 0.75)',
+                        'mc-border': 'rgba(56, 189, 248, 0.3)',
+                        'mc-emerald': '#10b981',
+                        'mc-emerald-bright': '#34d399',
+                        'mc-cyan': '#38bdf8',
+                        'mc-ice': '#a5f3fc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon-ice': '0 0 20px rgba(56, 189, 248, 0.4), inset 0 0 15px rgba(16, 185, 129, 0.15)',
+                        'neon-emerald-strong': '0 0 35px rgba(16, 185, 129, 0.65), 0 0 15px rgba(165, 243, 252, 0.8)',
+                        'neon-gold': '0 0 25px rgba(245, 158, 11, 0.5)',
+                        'neon-purple': '0 0 25px rgba(168, 85, 247, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #060d16;
+            color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(14, 165, 233, 0.12) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
 
-items:
+        /* Snow Canvas overlay */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-  'border':
-    material: YELLOW_STAINED_GLASS_PANE
-    display_name: ' '
-    slots:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 45
-      - 46
-      - 47
-      - 48
-      - 49
-      - 50
-      - 51
-      - 52
-      - 53
+        .frost-card {
+            background: rgba(10, 25, 41, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
 
-  'rtp':
-    material: ENDER_PEARL
-    slot: 20
-    display_name: '&6&l✦ &e&lКЕЗДЕЙСОҚ ТЕЛЕПОРТ'
-    lore:
-      - ''
-      - '&7Кездейсоқ әлемге телепорт бол!'
-      - ''
-      - '&e➥ Басу үшін басыңыз'
-    left_click_commands:
-      - '[close]'
-      - '[player] rtp'
+        .frost-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(165, 243, 252, 0.6), transparent);
+            border-top-left-radius: inherit;
+            border-top-right-radius: inherit;
+        }
 
-  'shop':
-    material: GOLD_INGOT
-    slot: 21
-    display_name: '&6&l✦ &e&lДҮКЕН'
-    lore:
-      - ''
-      - '&7Серверден қажетті заттарды сатып ал!'
-      - ''
-      - '&e➥ Басу үшін басыңыз'
-    left_click_commands:
-      - '[close]'
-      - '[player] shop'
+        .frost-card:hover {
+            border-color: rgba(52, 211, 153, 0.6);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.35), 0 0 10px rgba(16, 185, 129, 0.4);
+            transform: translateY(-3px);
+        }
 
-  'donate':
-    material: DIAMOND
-    slot: 22
-    display_name: '&6&l✦ &e&lДОНАТ'
-    lore:
-      - ''
-      - '&7Өзіңе ерекше дәреже таңда!'
-      - ''
-      - '&e➥ Басу үшін басыңыз'
-    left_click_commands:
-      - '[close]'
-      - '[player] donate'
+        .neon-text-emerald {
+            color: #34d399;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.6), 0 0 20px rgba(56, 189, 248, 0.4);
+        }
 
-  'kits':
-    material: CHEST
-    slot: 23
-    display_name: '&6&l✦ &e&lКИТТЕР'
-    lore:
-      - ''
-      - '&7Өзіңе арналған киттерді ал!'
-      - ''
-      - '&e➥ Басу үшін басыңыз'
-    left_click_commands:
-      - '[close]'
-      - '[player] kits'
+        .neon-text-ice {
+            color: #a5f3fc;
+            text-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+        }
 
-  'clan':
-    material: SHIELD
-    slot: 29
-    display_name: '&6&l✦ &e&lКЛАНДАР'
-    lore:
-      - ''
-      - '&7Клан құр немесе кланға қосыл!'
-      - ''
-      - '&e➥ Басу үшін басыңыз'
-    left_click_commands:
-      - '[close]'
-      - '[player] clan'
+        .glass-panel {
+            background: rgba(8, 20, 34, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
 
-  'private':
-    material: DIAMOND_BLOCK
-    slot: 30
-    display_name: '&6&l✦ &e&lПРИВАТ'
-    lore:
-      - ''
-      - '&7Өз территорияңды қорға!'
-      - ''
-      - '&e➥ Басу үшін басыңыз'
-    left_click_commands:
-      - '[close]'
-      - '[player] ps'
+        /* Icicle styling element */
+        .icicle-border {
+            background-image: radial-gradient(circle, rgba(165, 243, 252, 0.4) 1px, transparent 1px);
+            background-size: 12px 12px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-mc-cyan selection:text-slate-950">
 
-  'statistics':
-    material: BOOK
-    slot: 32
-    display_name: '&6&l✦ &e&lСТАТИСТИКА'
-    lore:
-      - ''
-      - '&7Өз жетістіктеріңді қара!'
-      - ''
-      - '&e➥ Басу үшін басыңыз'
-    left_click_commands:
-      - '[close]'
-      - '[player] stats'
+    <!-- Snow Animation Canvas -->
+    <canvas id="snow-canvas"></canvas>
 
-  'discord':
-    material: PAPER
-    slot: 33
-    display_name: '&6&l✦ &e&lDISCORD'
-    lore:
-      - ''
-      - '&7Біздің Discord серверімізге қосыл!'
-      - ''
-      - '&e➥ Сілтемені алу үшін басыңыз'
-    left_click_commands:
-      - '[message] &6Discord: &fdiscord.gg/5huFvEZfC'
-      - '[close]'
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-panel border-2 border-mc-cyan text-white px-5 py-3.5 rounded-2xl shadow-neon-ice flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-mc-cyan/20 flex items-center justify-center text-mc-ice">
+                <i class="fa-solid fa-snowflake animate-spin" style="animation-duration: 8s;"></i>
+            </div>
+            <div>
+                <p id="toast-title" class="font-bold text-xs uppercase tracking-wider text-mc-ice">Көшірілді!</p>
+                <p id="toast-message" class="text-sm font-medium text-slate-200">IP сәтті көшірілді</p>
+            </div>
+        </div>
+    </div>
 
-  'info':
-    material: NETHER_STAR
-    slot: 13
-    display_name: '&6&l✦ &e&lTREELANDMC'
-    lore:
-      - ''
-      - '&fСервер: &eTreeLandMC'
-      - '&fРежим: &aSurvival'
-      - '&fНұсқа: &e1.21+'
-      - ''
-      - '&6&lБІЗБЕН БІРГЕ ОЙНА!'
-      - '&7Саяхатыңды дәл қазір баста!'
-      - ''
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 glass-panel border-b border-mc-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-3 group z-10">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-mc-cyan via-mc-emerald to-emerald-900 p-0.5 shadow-neon-ice group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center relative">
+                            <i class="fa-solid fa-[# snowflakes] fa-tree text-xl text-mc-emerald-bright"></i>
+                            <i class="fa-solid fa-snowflake text-[10px] text-mc-ice absolute -top-1 -right-1"></i>
+                        </div>
+                    </div>
+                    <span class="text-2xl font-black tracking-wider text-white neon-text-emerald">TREE<span class="text-mc-ice">LAND</span></span>
+                </a>
 
-  'close':
-    material: BARRIER
-    slot: 49
-    display_name: '&c&lМӘЗІРДІ ЖАБУ'
-    lore:
-      - '&7Мәзірден шығу үшін бас.'
-    left_click_commands:
-      - '[close]'
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-semibold z-10">
+                    <a href="#server-info" class="text-slate-300 hover:text-mc-ice transition-colors">IP Мекенжайлар</a>
+                    <a href="#donates" class="text-slate-300 hover:text-mc-ice transition-colors">Донаттар</a>
+                    <a href="#cases" class="text-slate-300 hover:text-mc-ice transition-colors">Кейстер</a>
+                    <a href="#rules" class="text-slate-300 hover:text-mc-ice transition-colors">Ережелер</a>
+                    <a href="https://t.me/asik784" target="_blank" class="px-5 py-2.5 rounded-xl bg-mc-cyan/10 text-mc-ice border border-mc-cyan/40 hover:bg-mc-cyan hover:text-slate-950 font-bold transition-all shadow-neon-ice flex items-center space-x-2">
+                        <i class="fa-solid fa-snowflake text-xs"></i>
+                        <span>Қолдау</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white p-2 z-10">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-mc-border px-4 pt-2 pb-6 space-y-3 text-sm font-semibold z-10 relative">
+            <a href="#server-info" class="block py-2 text-slate-300 hover:text-mc-ice">IP Мекенжайлар</a>
+            <a href="#donates" class="block py-2 text-slate-300 hover:text-mc-ice">Донаттар</a>
+            <a href="#cases" class="block py-2 text-slate-300 hover:text-mc-ice">Кейстер</a>
+            <a href="#rules" class="block py-2 text-slate-300 hover:text-mc-ice">Ережелер</a>
+            <a href="https://t.me/asik784" target="_blank" class="block w-full text-center py-2.5 rounded-xl bg-mc-cyan text-slate-950 font-bold">
+                <i class="fa-paper-plane fa-solid mr-2"></i>Қолдау (@asik784)
+            </a>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+        <!-- Hero & IP Connect Section -->
+        <section id="server-info" class="relative py-16 lg:py-24 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-mc-cyan/10 border border-mc-cyan/40 text-mc-ice text-xs font-bold uppercase tracking-widest mb-6 shadow-neon-ice">
+                        <i class="fa-solid fa-snowflake text-xs text-mc-cyan animate-spin" style="animation-duration: 6s;"></i>
+                        <span>Winter Edition Anarchy · 1.21.x</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight mb-4">
+                        ҚЫСТЫҚ ҒАЖАП <br>
+                        <span class="neon-text-emerald">TREELAND ANARCHY</span>
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg mb-10 max-w-2xl mx-auto font-normal">
+                        Мұзды әлемдегі суық анархия шайқасы! Базаңды тұрғыз, аязды шайқасқа түс және өз билігіңді орнат.
+                    </p>
+
+                    <!-- Connection Cards Container -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left mb-8">
+                        
+                        <!-- Java IP Card -->
+                        <div class="frost-card p-6 rounded-3xl flex flex-col justify-between group">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl bg-mc-cyan/10 border border-mc-cyan/40 flex items-center justify-center text-mc-ice">
+                                        <i class="fa-desktop fa-solid text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-white">Java Edition</h3>
+                                        <p class="text-xs text-slate-400">PC / Компьютерлер үшін</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-md bg-cyan-950 text-mc-ice text-[10px] font-extrabold tracking-wider border border-mc-cyan/40 flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-mc-cyan animate-pulse"></span> ONLINE
+                                </span>
+                            </div>
+
+                            <div class="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 flex items-center justify-between font-mono text-sm mb-2">
+                                <span class="text-slate-200 select-all font-semibold">treelandkz.minerent.io</span>
+                                <button onclick="copyText('treelandkz.minerent.io', 'Java IP')" class="px-3 py-1.5 bg-mc-cyan/20 hover:bg-mc-cyan text-mc-ice hover:text-slate-950 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span>Көшіру</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bedrock IP Card -->
+                        <div class="frost-card p-6 rounded-3xl flex flex-col justify-between group">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl bg-mc-emerald/10 border border-mc-emerald/40 flex items-center justify-center text-mc-emerald-bright">
+                                        <i class="fa-mobile-screen-button fa-solid text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-white">Bedrock Edition</h3>
+                                        <p class="text-xs text-slate-400">Телефон / Планшеттер үшін</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-md bg-emerald-950 text-mc-emerald-bright text-[10px] font-extrabold tracking-wider border border-mc-emerald/40 flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-mc-emerald animate-pulse"></span> ONLINE
+                                </span>
+                            </div>
+
+                            <div class="space-y-2 font-mono text-sm">
+                                <div class="bg-slate-950/80 p-2.5 px-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                                    <span class="text-xs text-slate-400 font-sans">IP:</span>
+                                    <span class="text-slate-200 font-semibold text-xs">treelandkz.minerent.io</span>
+                                    <button onclick="copyText('treelandkz.minerent.io', 'Bedrock IP')" class="text-mc-ice hover:text-white text-xs">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="bg-slate-950/80 p-2.5 px-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                                    <span class="text-xs text-slate-400 font-sans">Port:</span>
+                                    <span class="text-mc-ice font-bold text-xs">19151</span>
+                                    <button onclick="copyText('19151', 'Bedrock Port')" class="text-mc-ice hover:text-white text-xs">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Social / Support Buttons under IP -->
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <a href="https://t.me/treelandkzz" target="_blank" class="px-6 py-3 rounded-2xl bg-cyan-500/15 border border-cyan-400/40 hover:bg-cyan-400 hover:text-slate-950 text-cyan-300 font-bold text-sm transition-all shadow-lg flex items-center space-x-2">
+                            <i class="fa-brands fa-telegram text-lg"></i>
+                            <span>Telegram Канал</span>
+                        </a>
+                        <a href="https://t.me/asik784" target="_blank" class="px-6 py-3 rounded-2xl bg-mc-emerald/15 border border-mc-emerald/40 hover:bg-mc-emerald hover:text-slate-950 text-mc-emerald-bright font-bold text-sm transition-all shadow-neon-ice flex items-center space-x-2">
+                            <i class="fa-headset fa-solid text-lg"></i>
+                            <span>Қолдау (@asik784)</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: DONATES (VIP RANKS) -->
+        <section id="donates" class="py-20 relative border-t border-mc-border bg-slate-950/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="px-4 py-1 rounded-full bg-mc-cyan/10 border border-mc-cyan/30 text-mc-ice text-xs font-bold uppercase tracking-wider">Қыстық Жеңілдіктер</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3 mb-4">ДОНАТ РАНГТЕРІ</h2>
+                    <p class="text-slate-300 text-sm sm:text-base">Өзіңізге сәйкес келетін мәртебені таңдап, суық анархияда артықшылыққа ие болыңыз!</p>
+                </div>
+
+                <!-- 7 Ranks Grid Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- 1. NOKER -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Бастапқы Ранг</span>
+                                <h3 class="text-2xl font-black text-slate-200 mt-1">NOKER</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">290</span>
+                                    <span class="text-sm font-bold text-mc-ice ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-cyan mr-2.5"></i> <span class="font-bold text-slate-100">[Нокер]</span> префиксі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-cyan mr-2.5"></i> /kit noker жинағы</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-cyan mr-2.5"></i> 2 Сет-хом (Home мекені)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-cyan mr-2.5"></i> /craft (Виртуалды верстак)</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('NOKER Рангі', 290)" class="w-full py-3 bg-mc-cyan/15 hover:bg-mc-cyan hover:text-slate-950 text-mc-ice font-extrabold rounded-2xl border border-mc-cyan/40 transition-all text-xs tracking-wider uppercase">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 2. NOMAD -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-mc-emerald">Ең танымал</span>
+                                <h3 class="text-2xl font-black text-mc-emerald-bright mt-1">NOMAD</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">590</span>
+                                    <span class="text-sm font-bold text-mc-emerald-bright ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-emerald mr-2.5"></i> <span class="font-bold text-mc-emerald-bright">[Номад]</span> префиксі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-emerald mr-2.5"></i> /kit nomad арнайы жинағы</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-emerald mr-2.5"></i> /hat (Басқа блок кию)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-emerald mr-2.5"></i> 4 Сет-хом орнату</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('NOMAD Рангі', 590)" class="w-full py-3 bg-mc-emerald text-slate-950 font-extrabold rounded-2xl hover:bg-emerald-400 transition-all text-xs tracking-wider uppercase shadow-neon-ice">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 3. SERI -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-cyan-400">Advanced</span>
+                                <h3 class="text-2xl font-black text-cyan-300 mt-1">SERI</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">990</span>
+                                    <span class="text-sm font-bold text-cyan-300 ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-cyan-300 mr-2.5"></i> <span class="font-bold text-cyan-300">[Сері]</span> префиксі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-cyan-300 mr-2.5"></i> /fly (Аспанда ұшу режимі)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-cyan-300 mr-2.5"></i> /kit seri жинағы</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-cyan-300 mr-2.5"></i> /enderchest (Эндер сандығы)</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('SERI Рангі', 990)" class="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-lg">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 4. BATYR -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-rose-400">Warriors</span>
+                                <h3 class="text-2xl font-black text-rose-400 mt-1">BATYR</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">1,690</span>
+                                    <span class="text-sm font-bold text-rose-400 ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-rose-400 mr-2.5"></i> <span class="font-bold text-rose-400">[Батыр]</span> префиксі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-rose-400 mr-2.5"></i> KeepInventory (Зат түспеу)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-rose-400 mr-2.5"></i> /heal & /feed (Емделу)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-rose-400 mr-2.5"></i> /workbench құралдары</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('BATYR Рангі', 1690)" class="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-lg">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 5. KEREY -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-purple-400">Elite</span>
+                                <h3 class="text-2xl font-black text-purple-400 mt-1">KEREY</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">2,490</span>
+                                    <span class="text-sm font-bold text-purple-400 ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-purple-400 mr-2.5"></i> <span class="font-bold text-purple-400">[Керей]</span> префиксі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-purple-400 mr-2.5"></i> /nick (Бүркеншік ат қою)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-purple-400 mr-2.5"></i> /kit kerey элиталық жинағы</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-purple-400 mr-2.5"></i> 10 Сет-хом орны</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('KEREY Рангі', 2490)" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-neon-purple">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 6. KHAN -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-amber-400">Royal</span>
+                                <h3 class="text-2xl font-black text-amber-400 neon-text-gold mt-1">KHAN</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">3,990</span>
+                                    <span class="text-sm font-bold text-amber-400 ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-amber-400 mr-2.5"></i> <span class="font-bold text-amber-400">[Хан]</span> алтын префиксі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-amber-400 mr-2.5"></i> /god (Өлмейтін режим)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-amber-400 mr-2.5"></i> /vanish & /near (Жасырын)</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-amber-400 mr-2.5"></i> Сервер толы болса да кіру</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('KHAN Рангі', 3990)" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-neon-gold">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 7. KAGAN (SUPREME - DOUBLE COLUMN) -->
+                    <div class="frost-card p-6 rounded-3xl border-2 border-mc-cyan flex flex-col justify-between md:col-span-2 lg:col-span-2 shadow-neon-emerald-strong relative overflow-hidden">
+                        <div class="absolute -right-12 -top-12 w-40 h-40 bg-mc-cyan/20 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="absolute top-3 right-4 px-3 py-1 bg-gradient-to-r from-mc-cyan to-mc-emerald text-slate-950 text-[10px] font-black rounded-full uppercase tracking-widest shadow-md flex items-center gap-1">
+                            <i class="fa-solid fa-snowflake"></i> Максималды Премиум
+                        </div>
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-mc-ice">Supreme Ранг</span>
+                                <h3 class="text-3xl font-black text-mc-ice neon-text-ice mt-1">KAGAN</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-4xl font-black text-white">5,990</span>
+                                    <span class="text-lg font-bold text-mc-ice ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-200">
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-ice mr-2.5"></i> <span class="font-bold text-mc-ice">[Қаған]</span> градиентті префикс</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-ice mr-2.5"></i> Барлық донат құқықтары</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-ice mr-2.5"></i> Telegram VIP рөлі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-ice mr-2.5"></i> Сервер иесімен тікелей байланыс</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-ice mr-2.5"></i> Барлық кейстерге 5 тегін кілт</li>
+                                <li class="flex items-center"><i class="fa-solid fa-snowflake text-mc-ice mr-2.5"></i> Шексіз Home белгілері</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('KAGAN Рангі', 5990)" class="w-full py-3.5 bg-gradient-to-r from-mc-cyan via-mc-emerald to-emerald-400 hover:opacity-95 text-slate-950 font-black rounded-2xl transition-all text-sm tracking-widest uppercase shadow-neon-ice">
+                            KAGAN Сатып алу
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CASES (CRATES) -->
+        <section id="cases" class="py-20 relative border-t border-mc-border bg-slate-900/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="px-4 py-1 rounded-full bg-mc-cyan/10 border border-mc-cyan/30 text-mc-ice text-xs font-bold uppercase tracking-wider">Қыстық Кейстер</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3 mb-4">СЕРВЕР КЕЙСТЕРІ</h2>
+                    <p class="text-slate-300 text-sm sm:text-base">Сәттілікті сынап көр! Донаттар мен валютаны ұтып ал.</p>
+                </div>
+
+                <!-- 3 Cases Grid Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+                    <!-- 1. DONATE CASE -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between relative group">
+                        <div class="absolute top-4 right-4 text-purple-400 text-2xl opacity-50 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-purple-400">Ранг кейсі</span>
+                                <h3 class="text-2xl font-black text-purple-400 mt-1">ДОНАТ КЕЙС</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">350</span>
+                                    <span class="text-sm font-bold text-purple-400 ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-gem text-purple-400 mr-2.5"></i> Noker-ден Kagan-ға дейін түседі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-gem text-purple-400 mr-2.5"></i> 100% донат ранг кепілдігі</li>
+                                <li class="flex items-center"><i class="fa-solid fa-gem text-purple-400 mr-2.5"></i> Хан/Қаған түсу мүмкіндігі жоғары</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('Донат Кейс', 350)" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-neon-purple">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 2. MONEY CASE -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between relative group">
+                        <div class="absolute top-4 right-4 text-mc-emerald-bright text-2xl opacity-50 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-mc-emerald-bright">Валюта кейсі</span>
+                                <h3 class="text-2xl font-black text-mc-emerald-bright mt-1">АҚША КЕЙС</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">190</span>
+                                    <span class="text-sm font-bold text-mc-emerald-bright ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-coins text-mc-emerald-bright mr-2.5"></i> 50,000$ - 1,000,000$ ойын валютасы</li>
+                                <li class="flex items-center"><i class="fa-solid fa-coins text-mc-emerald-bright mr-2.5"></i> Экономикада тез баю</li>
+                                <li class="flex items-center"><i class="fa-solid fa-coins text-mc-emerald-bright mr-2.5"></i> Өте тиімді баға</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('Ақша Кейс', 190)" class="w-full py-3 bg-mc-emerald hover:bg-emerald-400 text-slate-950 font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-neon-ice">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                    <!-- 3. GOLD CASE -->
+                    <div class="frost-card p-6 rounded-3xl flex flex-col justify-between relative group">
+                        <div class="absolute top-4 right-4 text-amber-400 text-2xl opacity-50 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <div>
+                            <div class="text-center pb-5 border-b border-mc-border">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-amber-400">Сирек ресурстар</span>
+                                <h3 class="text-2xl font-black text-amber-400 mt-1">АЛТЫН КЕЙС</h3>
+                                <div class="mt-3 flex items-baseline justify-center">
+                                    <span class="text-3xl font-black text-white">490</span>
+                                    <span class="text-sm font-bold text-amber-400 ml-1">₸</span>
+                                </div>
+                            </div>
+                            <ul class="py-5 space-y-3 text-xs text-slate-300">
+                                <li class="flex items-center"><i class="fa-solid fa-shield-halved text-amber-400 mr-2.5"></i> Незерит броня & 1000-lvl кітаптар</li>
+                                <li class="flex items-center"><i class="fa-solid fa-shield-halved text-amber-400 mr-2.5"></i> Сирек Элитралар мен Тотемдер</li>
+                                <li class="flex items-center"><i class="fa-solid fa-shield-halved text-amber-400 mr-2.5"></i> Top PvP ресурстары</li>
+                            </ul>
+                        </div>
+                        <button onclick="openBuyModal('Алтын Кейс', 490)" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-neon-gold">
+                            Сатып алу
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- RULES & UNBAN SECTION -->
+        <section id="rules" class="py-20 relative border-t border-mc-border bg-slate-950/70">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-14">
+                    <span class="px-4 py-1 rounded-full bg-mc-cyan/10 border border-mc-cyan/30 text-mc-ice text-xs font-bold uppercase tracking-wider">Сервер тәртібі</span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3 mb-4">ААА-АНАРХИЯ ЕРЕЖЕЛЕРІ</h2>
+                    <p class="text-slate-300 text-sm sm:text-base">Ойын әділ әрі қызықты болуы үшін ережелерді сақтаңыз!</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto space-y-4 mb-16">
+                    <!-- Rule 1 -->
+                    <div class="frost-card p-5 rounded-2xl flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-xl bg-mc-cyan/20 border border-mc-cyan/40 flex items-center justify-center text-mc-ice font-black text-sm shrink-0">1</div>
+                        <div>
+                            <h4 class="text-base font-bold text-white mb-1">Читерлік бағдарламаларға тыйым салынады</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">X-Ray, FlyHack, KillAura немесе серверге зиян софт қолдану банға әкеледі.</p>
+                        </div>
+                    </div>
+
+                    <!-- Rule 2 -->
+                    <div class="frost-card p-5 rounded-2xl flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-xl bg-mc-cyan/20 border border-mc-cyan/40 flex items-center justify-center text-mc-ice font-black text-sm shrink-0">2</div>
+                        <div>
+                            <h4 class="text-base font-bold text-white mb-1">Чат мәдениетін сақтаңыз</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">Ата-анаға тіл тигізу, спам және басқа сервер жарнамалауға тыйым салынады.</p>
+                        </div>
+                    </div>
+
+                    <!-- Rule 3 -->
+                    <div class="frost-card p-5 rounded-2xl flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-xl bg-mc-cyan/20 border border-mc-cyan/40 flex items-center justify-center text-mc-ice font-black text-sm shrink-0">3</div>
+                        <div>
+                            <h4 class="text-base font-bold text-white mb-1">Сервер багтарын пайдалану</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">Зат дюптеу (dupe) немесе жүйелік қателерді пайдалану банға себеп болады.</p>
+                        </div>
+                    </div>
+
+                    <!-- Rule 4 -->
+                    <div class="frost-card p-5 rounded-2xl flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-xl bg-mc-cyan/20 border border-mc-cyan/40 flex items-center justify-center text-mc-ice font-black text-sm shrink-0">4</div>
+                        <div>
+                            <h4 class="text-base font-bold text-white mb-1">Гриферлік & Анархия</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">Базаларды бұзу және рейд рұқсат етілген. Админдер атынан өтірік сөйлеуге болмайды.</p>
+                        </div>
+                    </div>
+
+                    <!-- Rule 5 -->
+                    <div class="frost-card p-5 rounded-2xl flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-xl bg-mc-cyan/20 border border-mc-cyan/40 flex items-center justify-center text-mc-ice font-black text-sm shrink-0">5</div>
+                        <div>
+                            <h4 class="text-base font-bold text-white mb-1">Әкімшілікке құрмет</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">Администрация шешімі талқыланбайды. Күмәнді сәттерде Telegram қолдауға жазыңыз.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UNBAN CARD UNDER RULES -->
+                <div class="max-w-xl mx-auto frost-card p-8 rounded-3xl border-2 border-rose-500/50 shadow-2xl relative overflow-hidden">
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center mx-auto mb-3 text-xl">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">БЛОКТАН ШЫҒУ (РАЗБАН)</h3>
+                        <p class="text-xs text-slate-300 mt-1 mb-5">Қателестіңіз бе? Серверге қайта оралып, анархия ойынын жалғастырыңыз!</p>
+                        
+                        <div class="flex items-baseline justify-center mb-6">
+                            <span class="text-4xl font-black text-white">790</span>
+                            <span class="text-base font-bold text-rose-400 ml-1">₸</span>
+                        </div>
+
+                        <button onclick="openBuyModal('Сервердегі Разбан', 790)" class="w-full py-3.5 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-2xl transition-all text-xs tracking-wider uppercase shadow-lg">
+                            Разбан сатып алу
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- BUY MODAL POPUP -->
+    <div id="buyModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 px-4">
+        <div class="frost-card border-2 border-mc-cyan w-full max-w-md p-6 sm:p-8 rounded-3xl shadow-neon-emerald-strong relative transform scale-95 transition-all duration-300">
+            <!-- Close Button -->
+            <button onclick="closeBuyModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl w-8 h-8 rounded-full bg-slate-900/60 flex items-center justify-center transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-mc-cyan/20 border border-mc-cyan/50 text-mc-ice flex items-center justify-center mx-auto mb-3 text-xl shadow-neon-ice">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <h3 class="text-xl font-black text-white" id="modalItemTitle">Сатып алу</h3>
+                <p class="text-xs text-mc-ice font-bold mt-1" id="modalItemPrice">Бағасы: 0₸</p>
+            </div>
+
+            <!-- Input Form -->
+            <form onsubmit="submitPurchase(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Minecraft Никнейм:</label>
+                    <input type="text" id="playerNickname" required placeholder="Никнейм жазыңыз..." class="w-full px-4 py-3 bg-slate-950/90 border border-mc-cyan/40 rounded-xl text-white text-sm focus:outline-none focus:border-mc-cyan focus:ring-1 focus:ring-mc-cyan transition-all font-mono">
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-mc-cyan via-mc-emerald to-emerald-400 hover:opacity-95 text-slate-950 font-black rounded-xl transition-all text-xs tracking-widest uppercase shadow-neon-ice flex items-center justify-center space-x-2">
+                        <i class="fa-brands fa-telegram text-base"></i>
+                        <span>Сатып алу (Telegram)</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER EXACTLY MATCHING USER'S IMAGE -->
+    <footer class="bg-[#050911] py-8 border-t border-slate-900 text-center font-sans text-xs sm:text-sm text-slate-400 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="tracking-wide">
+                © 2025–2026 TreeLand. Барлық құқықтар қорғалған. · Java & Bedrock · 1.21.x
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts & Snow Effect -->
+    <script>
+        // --- SNOW ANIMATION CANVAS ---
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const flakes = Array.from({ length: 70 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 2.5 + 0.8,
+            density: Math.random() * 1 + 0.5,
+            opacity: Math.random() * 0.7 + 0.3
+        }));
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(207, 250, 254, 0.8)';
+            
+            flakes.forEach(f => {
+                ctx.beginPath();
+                ctx.globalAlpha = f.opacity;
+                ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            moveSnow();
+            requestAnimationFrame(drawSnow);
+        }
+
+        function moveSnow() {
+            flakes.forEach(f => {
+                f.y += Math.pow(f.density, 2) + 0.5;
+                f.x += Math.sin(f.y / 20) * 0.5;
+
+                if (f.y > height) {
+                    f.y = -5;
+                    f.x = Math.random() * width;
+                }
+            });
+        }
+        drawSnow();
+
+        // --- PURCHASE & MODAL LOGIC ---
+        let currentItem = '';
+        let currentPrice = 0;
+
+        function copyText(text, label) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = `${label}: ${text}`;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function openBuyModal(itemName, price) {
+            currentItem = itemName;
+            currentPrice = price;
+
+            document.getElementById('modalItemTitle').textContent = itemName;
+            document.getElementById('modalItemPrice').textContent = `Бағасы: ${price}₸`;
+            document.getElementById('playerNickname').value = '';
+
+            const modal = document.getElementById('buyModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-95');
+            modal.querySelector('div').classList.add('scale-100');
+        }
+
+        function closeBuyModal() {
+            const modal = document.getElementById('buyModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+        }
+
+        function submitPurchase(event) {
+            event.preventDefault();
+            const nickname = document.getElementById('playerNickname').value.trim();
+            if (nickname) {
+                const textToSend = `Сәлем👋 мен ${currentItem} сатп алғым келеді ${currentPrice}₸ никнейм: ${nickname}`;
+                const message = encodeURIComponent(textToSend);
+                window.open(`https://t.me/asik784?text=${message}`, '_blank');
+                closeBuyModal();
+            }
+        }
+
+        // Mobile Nav Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
 ```
